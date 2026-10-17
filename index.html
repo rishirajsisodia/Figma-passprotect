@@ -19,6 +19,7 @@
       --color-page: #FFFFF7;
       --color-surface: #FFFFFF;
       --color-line: #E7E4DB;
+      --color-card-edge: #D8D8C5;
       --color-primary: #2C6396;
       --color-primary-hover: #255683;
       --color-primary-pressed: #1E4A72;
@@ -107,12 +108,19 @@
       justify-content: center;
       padding: var(--space-40) 0;
     }
+    /* White card around the form */
     .form-wrap {
       width: 100%;
       max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: var(--space-24);
+      padding: var(--space-24);
+      background: var(--color-surface);
+      border: 1px solid var(--color-card-edge);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 7px 0 0 var(--color-card-edge);
+      margin-bottom: 7px; /* room for the bottom edge */
     }
     .intro { display: flex; flex-direction: column; gap: var(--space-8); }
     h1 {
@@ -249,9 +257,11 @@
     .btn.is-checking .arrow { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Need access? Email me */
+    /* Need access? Email me — with a divider line above it (desktop) */
     .access {
-      margin: 0;
+      margin: var(--space-40) 0 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-card-edge);
       text-align: center;
       font-weight: 500;
       font-size: 14px;
@@ -329,6 +339,8 @@
       .private { font-size: 12px; }
       .main { align-items: flex-start; padding-top: var(--space-40); }
       .form-wrap { max-width: none; }
+      .intro { margin-bottom: var(--space-40); }       /* 64px above "Password" */
+      .access { margin-top: 46px; padding-top: 0; border-top: 0; } /* no divider on mobile */
       .toast { bottom: 84px; width: calc(100vw - 2 * var(--page-pad)); }
     }
 
