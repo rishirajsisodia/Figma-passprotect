@@ -432,6 +432,22 @@
 
     document.getElementById("toast-email").textContent = CONTACT_EMAIL;
 
+    // Which case study to open. From the link: ?deck=1, ?deck=2 ...
+    const params = new URLSearchParams(location.search);
+    const deckId = params.get("deck") || "1";
+    const deckUrl = "/deck?deck=" + encodeURIComponent(deckId);
+
+    if (params.get("missing")) {
+      // This case study link isn't set up on Vercel yet
+      feedback.textContent = "This case study link isn't ready yet. Please email me.";
+    } else {
+      // Already typed the password before? Go straight in.
+      fetch("/api/unlock", { cache: "no-store" })
+        .then((r) => r.json())
+        .then((d) => { if (d.unlocked) window.location.replace(deckUrl); })
+        .catch(() => {});
+    }
+
     // Show / hide the password
     eye.addEventListener("click", () => {
       const show = input.type === "password";
@@ -512,7 +528,7 @@
         });
         if (res.ok) {
           // Right password → open the case study
-          window.location.href = "/deck";
+          window.location.href = deckUrl;
           return;
         }
         setChecking(false);

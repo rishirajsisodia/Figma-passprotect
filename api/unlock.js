@@ -2,11 +2,21 @@
 // The page sends the typed password here. This runs on Vercel's server,
 // so visitors can never see the real password.
 
-const { COOKIE_NAME, makeTicket, sameText } = require("./_auth");
+const { COOKIE_NAME, makeTicket, sameText, readCookie } = require("./_auth");
 
 const ONE_WEEK = 60 * 60 * 24 * 7; // how long a visitor stays unlocked
 
 module.exports = async (req, res) => {
+  // GET: "Has this visitor already typed the right password?"
+  // Used so people who unlocked once can open other case studies without retyping.
+  if (req.method === "GET") {
+    const real = process.env.SITE_PASSWORD;
+    const ticket = readCookie(req, COOKIE_NAME);
+    res.setHeader("Cache-Control", "no-store");
+    res.status(200).json({ unlocked: Boolean(real && ticket && sameText(ticket, makeTicket(real))) });
+    return;
+  }
+
   if (req.method !== "POST") {
     res.status(405).json({ ok: false });
     return;

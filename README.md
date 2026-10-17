@@ -38,6 +38,22 @@ Your password and Figma link are **not** in these files. You type them on the Ve
 
 Send people your Vercel link, for example `https://case-study-gate.vercel.app`, and the password.
 
+## More than one case study
+
+One password page can open many Figma files. Each one gets a number:
+
+| Link to share | Vercel setting it opens |
+|---|---|
+| `your-site.vercel.app` or `your-site.vercel.app/?deck=1` | `DECK_1` (or `FIGMA_URL` if `DECK_1` is not set) |
+| `your-site.vercel.app/?deck=2` | `DECK_2` |
+| `your-site.vercel.app/?deck=3` | `DECK_3` |
+
+To add a new case study: Vercel → **Settings → Environment Variables** → add `DECK_2` (or the next number) with the Figma link → **Redeploy**.
+
+- One password works for all case studies.
+- Someone who already typed the password goes straight in on other links (for 7 days).
+- If a link's number is not set up yet, the page shows: "This case study link isn't ready yet."
+
 ## Changing things later
 
 - **New password or new Figma link:** Vercel → your project → **Settings** → **Environment Variables** → edit → then **Deployments** → **⋯** → **Redeploy**.
