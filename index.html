@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#FFFFF7" />
+  <title>Rishi Raj Sisodia · Case study</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232C6396'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Plus Jakarta Sans,Arial,sans-serif' font-weight='800' font-size='20' fill='%23fff'%3ER%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       Design tokens — same names as the Figma variables
+       ============================================================ */
+    :root {
+      /* Colors */
+      --color-page: #FFFFF7;
+      --color-surface: #FFFFFF;
+      --color-line: #E7E4DB;
+      --color-primary: #2C6396;
+      --color-primary-hover: #255683;
+      --color-primary-pressed: #1E4A72;
+      --color-primary-shadow: #043461;
+      --color-on-primary: #FFFFFF;
+      --color-ink: #1A1E24;
+      --color-ink-muted: #786959;
+      --color-error: #A34533;
+      --color-error-bg: #FFF7F4;
+      --color-disabled-bg: #E3EAF1;
+      --color-disabled-ink: #5F7C97;
+
+      /* Spacing */
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-16: 16px;
+      --space-20: 20px;
+      --space-24: 24px;
+      --space-32: 32px;
+      --space-40: 40px;
+
+      /* Corners */
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 15px;
+
+      /* Fonts */
+      --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+      --font-body: "Mulish", system-ui, sans-serif;
+
+      /* Page edge: 32px desktop, 20px mobile */
+      --page-pad: var(--space-32);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+
+    body {
+      background: var(--color-page);
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Whole screen: header on top, form in middle, footer at bottom */
+    .screen {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      padding: var(--page-pad);
+    }
+
+    /* ---------- Header ---------- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      height: 64px;
+      border-bottom: 1px solid var(--color-line);
+    }
+    .name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 1.2;
+      color: var(--color-ink);
+      text-decoration: none;
+    }
+    .private {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 28px;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.2;
+      color: var(--color-ink-muted);
+    }
+
+    /* ---------- Middle ---------- */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-40) 0;
+    }
+    .form-wrap {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-24);
+    }
+    .intro { display: flex; flex-direction: column; gap: var(--space-8); }
+    h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1.2;
+      color: var(--color-ink);
+    }
+    .guide {
+      margin: 0;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--color-ink-muted);
+    }
+
+    /* Password label + box */
+    .field { display: flex; flex-direction: column; gap: var(--space-8); }
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.2;
+      color: var(--color-ink);
+    }
+    .input-box {
+      display: flex;
+      align-items: center;
+      height: 54px;
+      padding: 0 5px 0 var(--space-16);
+      background: var(--color-surface);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-md);
+      transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    /* Typing state: blue border + soft blue ring */
+    .input-box:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(44, 99, 150, 0.14);
+    }
+    /* Error state */
+    .field.is-error .input-box {
+      border-color: var(--color-error);
+      background: var(--color-error-bg);
+      box-shadow: none;
+    }
+    input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 16px;
+      color: var(--color-ink);
+    }
+    input[type="password"] { letter-spacing: 2px; }
+    input::placeholder { color: var(--color-ink-muted); letter-spacing: 0; opacity: 1; }
+    input:disabled { color: var(--color-ink); -webkit-text-fill-color: var(--color-ink); }
+    input:disabled::selection { background: transparent; }
+
+    /* Eye button */
+    .eye {
+      flex: none;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: none;
+      border-radius: var(--radius-sm);
+      color: var(--color-ink-muted);
+      cursor: pointer;
+    }
+    .eye:hover { color: var(--color-ink); }
+    .eye:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -2px; }
+    .eye:disabled { opacity: .5; cursor: default; }
+    .eye svg[hidden] { display: none; }
+
+    /* Error message row — space is always kept, so nothing jumps */
+    .feedback {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 1.2;
+      color: var(--color-error);
+    }
+    .feedback svg { flex: none; }
+    .feedback:empty { visibility: hidden; }
+
+    /* ---------- Continue button ---------- */
+    .btn {
+      width: 100%;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-20);
+      border: 0;
+      border-radius: var(--radius-lg);
+      background: var(--color-primary);
+      color: var(--color-on-primary);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.2;
+      cursor: pointer;
+      box-shadow: 0 4px 0 0 var(--color-primary-shadow);
+      transition: background .15s, box-shadow .08s, transform .08s;
+    }
+    .btn:hover { background: var(--color-primary-hover); }
+    .btn:active {
+      background: var(--color-primary-pressed);
+      box-shadow: 0 1px 0 0 var(--color-primary-shadow), inset 0 2px 4px rgba(0, 0, 0, .15);
+      transform: translateY(3px);
+    }
+    .btn:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+    .btn-label { display: inline-flex; align-items: center; gap: 10px; }
+    .spinner { display: none; animation: spin .8s linear infinite; }
+    /* Checking state */
+    .btn.is-checking {
+      background: var(--color-disabled-bg);
+      color: var(--color-disabled-ink);
+      box-shadow: none;
+      transform: none;
+      cursor: default;
+    }
+    .btn.is-checking .spinner { display: block; }
+    .btn.is-checking .arrow { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Need access? Email me */
+    .access {
+      margin: 0;
+      text-align: center;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.2;
+      color: var(--color-ink-muted);
+    }
+    .link {
+      padding: 0;
+      border: 0;
+      background: none;
+      font: inherit;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+    .link:hover { color: var(--color-primary-hover); }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      height: 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--space-16);
+      border-top: 1px solid var(--color-line);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.2;
+      color: var(--color-ink-muted);
+    }
+    .footer a { color: inherit; text-decoration: none; }
+    .footer a:hover { color: var(--color-ink); }
+
+    /* ---------- Email copied pop-up ---------- */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 96px;
+      width: 370px;
+      max-width: calc(100vw - 2 * var(--page-pad));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px var(--space-16);
+      background: var(--color-surface);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-md);
+      box-shadow: 0 6px 20px rgba(26, 30, 36, .07);
+      opacity: 0;
+      transform: translate(-50%, 12px);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .3s cubic-bezier(.2, .9, .3, 1.2);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast-icon {
+      flex: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--color-page);
+      color: var(--color-primary);
+    }
+    .toast-title { font-weight: 700; font-size: 14px; line-height: 1.2; color: var(--color-ink); }
+    .toast-email { margin-top: 2px; font-weight: 500; font-size: 13px; line-height: 1.2; color: var(--color-ink-muted); }
+
+    /* ---------- Mobile (under 768px) ---------- */
+    @media (max-width: 767px) {
+      :root { --page-pad: var(--space-20); }
+      .header { height: 56px; }
+      .name { font-size: 20px; }
+      .private { font-size: 12px; }
+      .main { align-items: flex-start; padding-top: var(--space-40); }
+      .form-wrap { max-width: none; }
+      .toast { bottom: 84px; width: calc(100vw - 2 * var(--page-pad)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen">
+
+    <header class="header">
+      <a class="name" href="https://rishirajsisodia.com">RISHI RAJ SISODIA</a>
+      <span class="private">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        PRIVATE VIEW
+      </span>
+    </header>
+
+    <main class="main">
+      <form class="form-wrap" id="form" autocomplete="off" novalidate>
+        <div class="intro">
+          <h1>An invitation to explore.</h1>
+          <p class="guide">Enter the password shared with you.</p>
+        </div>
+
+        <div>
+          <div class="field" id="field">
+            <label for="password">Password</label>
+            <div class="input-box">
+              <input id="password" type="password" placeholder="Enter password" autocomplete="off" autofocus aria-describedby="feedback" />
+              <button type="button" class="eye" id="eye" aria-label="Show password">
+                <!-- eye: password hidden -->
+                <svg class="icon-eye" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                <!-- eye-off: password shown -->
+                <svg class="icon-eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="feedback" id="feedback" role="alert"></div>
+
+          <button type="submit" class="btn" id="submit">
+            <span class="btn-label">
+              <svg class="spinner" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.56"/></svg>
+              <span id="btn-text">Continue</span>
+            </span>
+            <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+        <p class="access">Need access? <button type="button" class="link" id="email-me">Email me</button></p>
+      </form>
+    </main>
+
+    <footer class="footer">
+      <span>Shared with care.</span>
+      <a href="mailto:rishirsisodia@gmail.com" id="footer-email">rishirsisodia@gmail.com</a>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </span>
+    <div>
+      <div class="toast-title">Email copied</div>
+      <div class="toast-email" id="toast-email"></div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    //  ✏️  Your email (shown in the pop-up and copied on click)
+    // ============================================================
+    const CONTACT_EMAIL = "rishirsisodia@gmail.com";
+    // ============================================================
+
+    const form = document.getElementById("form");
+    const field = document.getElementById("field");
+    const input = document.getElementById("password");
+    const eye = document.getElementById("eye");
+    const feedback = document.getElementById("feedback");
+    const button = document.getElementById("submit");
+    const btnText = document.getElementById("btn-text");
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    document.getElementById("toast-email").textContent = CONTACT_EMAIL;
+
+    // Show / hide the password
+    eye.addEventListener("click", () => {
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      eye.querySelector(".icon-eye").hidden = show;
+      eye.querySelector(".icon-eye-off").hidden = !show;
+      eye.setAttribute("aria-label", show ? "Hide password" : "Show password");
+      input.focus();
+    });
+
+    // Remove the red error as soon as the person types again
+    input.addEventListener("input", () => {
+      if (field.classList.contains("is-error")) clearError();
+    });
+
+    function showError(message) {
+      field.classList.add("is-error");
+      feedback.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>';
+      feedback.append(message);
+    }
+
+    function clearError() {
+      field.classList.remove("is-error");
+      feedback.innerHTML = "";
+    }
+
+    function setChecking(on) {
+      if (on) {
+        clearError();
+        // remove the text highlight before the box is locked
+        input.setSelectionRange(input.value.length, input.value.length);
+        input.blur();
+      }
+      button.classList.toggle("is-checking", on);
+      button.disabled = on;
+      input.disabled = on;
+      eye.disabled = on;
+      btnText.textContent = on ? "Checking…" : "Continue";
+    }
+
+    // Copy email + show the pop-up
+    async function copyEmail() {
+      try {
+        await navigator.clipboard.writeText(CONTACT_EMAIL);
+      } catch (err) {
+        const tmp = document.createElement("textarea");
+        tmp.value = CONTACT_EMAIL;
+        tmp.style.position = "fixed";
+        tmp.style.opacity = "0";
+        document.body.appendChild(tmp);
+        tmp.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        tmp.remove();
+      }
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 4000);
+    }
+    document.getElementById("email-me").addEventListener("click", copyEmail);
+
+    // Continue: ask the server if the password is right
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const password = input.value.trim();
+      if (!password) {
+        showError("Please enter the password.");
+        input.focus();
+        return;
+      }
+
+      setChecking(true);
+      try {
+        const res = await fetch("/api/unlock", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password }),
+        });
+        if (res.ok) {
+          // Right password → open the case study
+          window.location.href = "/deck";
+          return;
+        }
+        setChecking(false);
+        if (res.status === 500) showError("This page is not set up yet.");
+        else showError("Incorrect password. Please try again.");
+      } catch (err) {
+        setChecking(false);
+        showError("Something went wrong. Please try again.");
+      }
+      input.focus();
+      input.select();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/deck", "destination": "/api/deck" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
+  ]
+}
