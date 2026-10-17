@@ -202,9 +202,12 @@
     .eye:disabled { opacity: .5; cursor: default; }
     .eye svg[hidden] { display: none; }
 
-    /* Error message row — space is always kept, so nothing jumps */
+    /* Password box + error + button: 16px apart */
+    .controls { display: flex; flex-direction: column; gap: var(--space-16); }
+
+    /* Error message row — only shown when there is an error */
     .feedback {
-      height: 34px;
+      margin-top: calc(-1 * var(--space-8)); /* sits 8px under the box */
       display: flex;
       align-items: center;
       gap: 6px;
@@ -214,7 +217,7 @@
       color: var(--color-error);
     }
     .feedback svg { flex: none; }
-    .feedback:empty { visibility: hidden; }
+    .feedback:empty { display: none; }
 
     /* ---------- Continue button ---------- */
     .btn {
@@ -222,7 +225,8 @@
       height: 54px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center; /* "Continue →" sits in the middle */
+      gap: 10px;
       padding: 0 var(--space-20);
       border: 0;
       border-radius: var(--radius-lg);
@@ -259,7 +263,7 @@
 
     /* Need access? Email me — with a divider line above it (desktop) */
     .access {
-      margin: var(--space-40) 0 0;
+      margin: 0;
       padding-top: 28px;
       border-top: 1px solid var(--color-card-edge);
       text-align: center;
@@ -338,8 +342,7 @@
       .name { font-size: 20px; }
       .private { font-size: 12px; }
       .main { align-items: flex-start; padding-top: var(--space-40); }
-      .form-wrap { max-width: none; }
-      .intro { margin-bottom: var(--space-40); }       /* 64px above "Password" */      .toast { bottom: 84px; width: calc(100vw - 2 * var(--page-pad)); }
+      .form-wrap { max-width: none; }      .toast { bottom: 84px; width: calc(100vw - 2 * var(--page-pad)); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -365,7 +368,7 @@
           <p class="guide">Enter the password shared with you.</p>
         </div>
 
-        <div>
+        <div class="controls">
           <div class="field" id="field">
             <label for="password">Password</label>
             <div class="input-box">
