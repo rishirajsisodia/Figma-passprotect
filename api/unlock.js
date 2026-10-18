@@ -2,21 +2,9 @@
 // The page sends the typed password here. This runs on Vercel's server,
 // so visitors can never see the real password.
 
-const { COOKIE_NAME, makeTicket, sameText, readCookie } = require("./_auth");
-
-const ONE_WEEK = 60 * 60 * 24 * 7; // how long a visitor stays unlocked
+const { COOKIE_NAME, HINT_COOKIE, ONE_WEEK, makeTicket, sameText } = require("./_auth");
 
 module.exports = async (req, res) => {
-  // GET: "Has this visitor already typed the right password?"
-  // Used so people who unlocked once can open other case studies without retyping.
-  if (req.method === "GET") {
-    const real = process.env.SITE_PASSWORD;
-    const ticket = readCookie(req, COOKIE_NAME);
-    res.setHeader("Cache-Control", "no-store");
-    res.status(200).json({ unlocked: Boolean(real && ticket && sameText(ticket, makeTicket(real))) });
-    return;
-  }
-
   if (req.method !== "POST") {
     res.status(405).json({ ok: false });
     return;
@@ -41,10 +29,12 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // Right password → give the visitor a pass ticket (a cookie).
-  res.setHeader(
-    "Set-Cookie",
-    `${COOKIE_NAME}=${makeTicket(realPassword)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${ONE_WEEK}`
-  );
+  // Right password → give the visitor:
+  // 1. the real pass ticket (HttpOnly: page code can't read or fake it)
+  // 2. a small flag so the page knows to skip straight to Figma next time
+  res.setHeader("Set-Cookie", [
+    `${COOKIE_NAME}=${makeTicket(realPassword)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${ONE_WEEK}`,
+    `${HINT_COOKIE}=1; Path=/; Secure; SameSite=Lax; Max-Age=${ONE_WEEK}`,
+  ]);
   res.status(200).json({ ok: true });
 };

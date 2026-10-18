@@ -5,7 +5,7 @@
 //   DECK_1, DECK_2, DECK_3 ...   → one per case study
 //   FIGMA_URL                    → still works as case study 1 (older setup)
 
-const { COOKIE_NAME, makeTicket, sameText, readCookie } = require("./_auth");
+const { COOKIE_NAME, HINT_COOKIE, makeTicket, sameText, readCookie } = require("./_auth");
 
 module.exports = (req, res) => {
   res.setHeader("Cache-Control", "no-store");
@@ -19,8 +19,13 @@ module.exports = (req, res) => {
 
   const redirect = (to) => { res.statusCode = 302; res.setHeader("Location", to); res.end(); };
 
-  // No ticket → back to the password page (remember which case study).
-  if (!hasTicket) return redirect("/?deck=" + encodeURIComponent(deck));
+  // No valid ticket → back to the password page (remember which case study).
+  // Also remove the "I have a pass" flag, so the page shows the password box
+  // instead of trying to skip again (e.g. after you change the password).
+  if (!hasTicket) {
+    res.setHeader("Set-Cookie", `${HINT_COOKIE}=; Path=/; Secure; SameSite=Lax; Max-Age=0`);
+    return redirect("/?deck=" + encodeURIComponent(deck));
+  }
 
   const figmaUrl = process.env["DECK_" + deck] || (deck === "1" ? process.env.FIGMA_URL : "");
 

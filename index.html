@@ -6,6 +6,18 @@
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#FFFFF7" />
   <title>Rishi Raj Sisodia · Case study</title>
+  <script>
+    // Has this visitor typed the right password in the last 7 days?
+    // If yes, go straight to the case study before the page is drawn.
+    // (The server still checks the real ticket on /deck.)
+    (function () {
+      var p = new URLSearchParams(location.search);
+      if (!p.get("missing") && /(?:^|;\s*)gate_seen=1/.test(document.cookie)) {
+        document.documentElement.style.visibility = "hidden";
+        location.replace("/deck?deck=" + encodeURIComponent(p.get("deck") || "1"));
+      }
+    })();
+  </script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232C6396'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Plus Jakarta Sans,Arial,sans-serif' font-weight='800' font-size='20' fill='%23fff'%3ER%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,6 +68,7 @@
 
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
+    html { background: var(--color-page); }
 
     body {
       background: var(--color-page);
@@ -440,12 +453,6 @@
     if (params.get("missing")) {
       // This case study link isn't set up on Vercel yet
       feedback.textContent = "This case study link isn't ready yet. Please email me.";
-    } else {
-      // Already typed the password before? Go straight in.
-      fetch("/api/unlock", { cache: "no-store" })
-        .then((r) => r.json())
-        .then((d) => { if (d.unlocked) window.location.replace(deckUrl); })
-        .catch(() => {});
     }
 
     // Show / hide the password

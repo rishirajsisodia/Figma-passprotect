@@ -3,7 +3,9 @@
 
 const crypto = require("crypto");
 
-const COOKIE_NAME = "gate";
+const COOKIE_NAME = "gate";      // the real pass ticket (hidden from page code)
+const HINT_COOKIE = "gate_seen"; // a simple "I have a pass" flag the page can read
+const ONE_WEEK = 60 * 60 * 24 * 7;
 
 // Makes a "pass ticket" from your password.
 // If you change SITE_PASSWORD on Vercel, all old tickets stop working.
@@ -28,4 +30,4 @@ function readCookie(req, name) {
   return "";
 }
 
-module.exports = { COOKIE_NAME, makeTicket, sameText, readCookie };
+module.exports = { COOKIE_NAME, HINT_COOKIE, ONE_WEEK, makeTicket, sameText, readCookie };
