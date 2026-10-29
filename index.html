@@ -18,7 +18,9 @@
       }
     })();
   </script>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232C6396'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Plus Jakarta Sans,Arial,sans-serif' font-weight='800' font-size='20' fill='%23fff'%3ER%3C/text%3E%3C/svg%3E" />
+  <!-- Same icon as rishirajsisodia.com -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="https://framerusercontent.com/images/XCRorD61PMIVquGT38qOGMP0gR0.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet" />
@@ -29,7 +31,6 @@
     :root {
       /* Colors */
       --color-page: #FFFFF7;
-      --color-dot: #DEDDD7; /* same light grey dots as the Framer site */
       --color-surface: #FFFFFF;
       --color-line: #E7E4DB;
       --color-card-edge: #D8D8C5;
@@ -69,16 +70,10 @@
 
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
-    /* Dot grid background: one small dot every 26px, matches the Framer site */
-    html {
-      background-color: var(--color-page);
-      background-image: radial-gradient(circle, var(--color-dot) 1.4px, transparent 1.5px);
-      background-size: 26px 26px;
-      background-position: 0 0;
-    }
+    html { background: var(--color-page); }
 
     body {
-      background: transparent; /* let the dots from html show through */
+      background: var(--color-page);
       color: var(--color-ink);
       font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
