@@ -31,6 +31,7 @@
     :root {
       /* Colors */
       --color-page: #FFFFF7;
+      --color-dot: #DEDDD7; /* same light grey dots as the Framer site */
       --color-surface: #FFFFFF;
       --color-line: #E7E4DB;
       --color-card-edge: #D8D8C5;
@@ -70,10 +71,16 @@
 
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
-    html { background: var(--color-page); }
+    /* Dot grid background: one small dot every 26px, matches the Framer site */
+    html {
+      background-color: var(--color-page);
+      background-image: radial-gradient(circle, var(--color-dot) 1.4px, transparent 1.5px);
+      background-size: 26px 26px;
+      background-position: 0 0;
+    }
 
     body {
-      background: var(--color-page);
+      background: transparent; /* let the dots from html show through */
       color: var(--color-ink);
       font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
