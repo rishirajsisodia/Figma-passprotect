@@ -359,7 +359,10 @@
 
     /* ---------- Mobile (under 768px) ---------- */
     @media (max-width: 767px) {
-      :root { --page-pad: var(--space-20); }
+      :root {
+        --page-pad: var(--space-20);
+        --color-dot: #DAD8D0; /* darker dots on phone, same as the Framer site */
+      }
       .header { height: 56px; }
       .name { font-size: 20px; }
       .private { font-size: 12px; }
